@@ -1,9 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import Url_api from '../Url_api';
 
-export default class Signin extends React.Component{
+class Signin extends React.Component{
 
   constructor(){
     super();
@@ -45,10 +44,13 @@ OnSubmitLogin = (e)=>{
     }
     if(this.state.status === true){
       
-      if(this.state.position == 'EMPLOYEE'){
+      if(this.state.position == 'MANAGER'){
         localStorage.setItem('id', this.state.id);
+        localStorage.setItem('name', res.data.data[0].p_name);
+        localStorage.setItem('picture', res.data.data[0].p_picture);
         localStorage.setItem('position',this.state.position);
-        this.props.history.push('/');
+        
+        this.props.history.push('/admin');
       }else{
         this.setState({
           status_login : false
@@ -67,17 +69,13 @@ OnSubmitLogin = (e)=>{
 }
 
    
-    render(){
-
-      
-   
-     
+    render(){ 
     return(
       <div className="limiter">
       <div className="container-login100">
         <div className="wrap-login100">
           <div className="login100-pic js-tilt" data-tilt>
-            <img src="assets/img/img-01.png" alt="IMG"/>
+            <img src="https://myseshabu.com/image/img-01.png" alt="IMG"/>
           </div>
   
           <form className="login100-form validate-form" onSubmit={this.OnSubmitLogin}>
@@ -136,9 +134,5 @@ OnSubmitLogin = (e)=>{
   
         );
     };
-
-    
-   
-
-
 }
+export default Signin;
