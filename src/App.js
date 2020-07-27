@@ -4,6 +4,7 @@ import AdminLayout from "./layouts/Admin.js";
 import { PrivateRoute } from './PrivateRoute';
 import Login from './SignupSignin/Signin';
 import Logout from './SignupSignin/Logout';
+import Register from './SignupSignin/Signup';
 
 class App extends Component{
   render(){
@@ -13,6 +14,7 @@ class App extends Component{
         <PrivateRoute path="/admin" component={AdminLayout} />
         <Route path="/login" component={Login} />
         <Route path="/logout" component={Logout} />
+        <Route path="/register" component={Register} />
         <Redirect from="/" to="/login" />
       </Switch>
     </BrowserRouter>

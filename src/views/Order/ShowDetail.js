@@ -111,7 +111,7 @@ class ShowDetail extends React.Component{
                 {
                   this.state.all != this.state.have ?
                   <button className="btn btn-success" onClick={this.onConfirmClick} disabled>ยืนยัน</button>
-                  :<button className="btn btn-success" onClick={this.onConfirmClick}>ยืนยัน</button>
+                  :<button className="btn btn-primary" onClick={this.onConfirmClick}>ยืนยัน</button>
                 }
                 
 

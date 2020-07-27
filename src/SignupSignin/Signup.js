@@ -1,6 +1,6 @@
 import React , { Component } from 'react';
 import axios from 'axios';
-
+import api from '../Url_api';
 
 class Signup extends Component{
 
@@ -15,20 +15,25 @@ class Signup extends Component{
         
     }
     componentDidMount(){
-      const { data } = this.props.location.state;
-      console.log("params "+data);
       
+      
+    }
+
+    onRadioChange = (e) => {
+      this.setState({
+        position: e.target.value
+      });
     }
     
     
     OnSubmit = (e)=>{
       e.preventDefault()
       const Name = this.getName.value;
-      const Position = this.getPosition.value;
+      const Position = this.state.position;
       const Username = this.getUsername.value;
       const Password = this.getPassword.value;
-   
-      axios.post(`http://localhost/project_shabu/index.php/login/register`, 
+
+      axios.post(api('register'), 
       JSON.stringify({
         'username': Username,
         'password': Password,
@@ -36,25 +41,11 @@ class Signup extends Component{
         'position': Position
       }))
       .then(res => {
-        this.setState({
-          status: res.data.status,
-          id:res.data.data[0].p_id,
-          position: res.data.data[0].p_position
-         
         
-        });
-        
-        if(this.state.status === true){
-          localStorage.setItem('id', this.state.id);
-          localStorage.setItem('position',this.state.position);
-          
-          if(this.state.position == 'MANAGER'){
-            this.props.history.push('/');
-          }else{
-            this.props.history.push('/employee');
-          }
-         
+        if(res.data == 1){
+          this.props.history.push('/login');
         }
+        
     
       })
     
@@ -65,64 +56,72 @@ class Signup extends Component{
     render(){
         return(
            
-                <div className="row">
-                    <div className="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-                    <div className="login-brand">
-                        <img src="../assets/img/stisla-fill.svg" alt="logo" width="100" className="shadow-light rounded-circle"/>
-                    </div>
+          <div className="limiter">
+          <div className="container-login100">
+            <div className="wrap-login100">
+              <div className="login100-pic js-tilt" data-tilt>
+                <img src="https://myseshabu.com/image/img-01.png" alt="IMG"/>
+              </div>
+      
+              <form className="login100-form validate-form" onSubmit={this.OnSubmit}>
+                <span className="login100-form-title">
+                  สมัครสมาชิก
+                </span>
 
-            <div className="card card-primary">
-            <div className="card-header"><h4>Register</h4></div>
+                <div className="wrap-input100 validate-input" data-validate = "Username is required">
+                  <input className="input100" type="text" name="user" placeholder="ชื่อ - สกุล" ref={(input)=>this.getName = input}/>
+                  <span className="focus-input100"></span>
+                  <span className="symbol-input100">
+                    <i className="fa fa-user" aria-hidden="true"></i>
+                  </span>
+                </div>
+      
+                <div className="wrap-input100 validate-input" data-validate = "Username is required">
+                  <input className="input100" type="text" name="user" placeholder="ชื่อผู้ใช้" ref={(input)=>this.getUsername = input}/>
+                  <span className="focus-input100"></span>
+                  <span className="symbol-input100">
+                    <i className="fa fa-user" aria-hidden="true"></i>
+                  </span>
+                </div>
+      
+                <div className="wrap-input100 validate-input" data-validate = "Password is required">
+                  <input className="input100" type="password" name="pass" placeholder="รหัสผ่าน" ref={(input)=>this.getPassword = input}/>
+                  <span className="focus-input100"></span>
+                  <span className="symbol-input100">
+                    <i className="fa fa-lock" aria-hidden="true"></i>
+                  </span>
+                </div>
 
-        <div className="card-body">
-
-        <form  className="needs-validation" noValidate="" onSubmit={this.OnSubmit}>
-        <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input id="name" type="text" className="form-control" name="name" tabIndex="1" required autoFocus ref={(input)=>this.getName = input} />
-            <div className="invalid-feedback">
-              Please fill in your name
+                <div className="form-check" style={{marginLeft:'35px'}}>
+                <input className="form-check-input" type="radio" id="exampleRadios1" value="employee" onChange={this.onRadioChange}/>
+                <label className="form-check-label" for="exampleRadios1">
+                  พนักงาน
+                </label>
+              </div>
+              <div className="form-check" style={{marginLeft:'35px'}}>
+                <input className="form-check-input" type="radio" id="exampleRadios2" value="manager" onChange={this.onRadioChange}/>
+                <label className="form-check-label" for="exampleRadios2">
+                  ผู้จัดการ
+                </label>
+              </div>
+                
+                <div className="container-login100-form-btn">
+                  <button type="submit" className="login100-form-btn">
+                    ยืนยัน
+                  </button>
+                </div>
+      {
+        this.state.status_login != false ?  ""
+      :<div className="text-center p-t-12">
+      <p className="txt3"> Username and Password incorrect!!</p>
+     </div>
+      }
+                
+                
+              </form>
             </div>
           </div>
-          <div className="form-group">
-            <label htmlFor="position">Position :</label>
-            <select name="position" ref={(input)=>this.getPosition = input}>
-                <option value="MANAGER">MANAGER</option>
-                <option value="EMPLOYEE">EMPLOYEE</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label htmlFor="user">Username</label>
-            <input id="user" type="text" className="form-control" name="user" tabIndex="1" required autoFocus ref={(input)=>this.getUsername = input} />
-            <div className="invalid-feedback">
-              Please fill in your name
-            </div>
-          </div>
-
-          <div className="form-group">
-            <div className="d-block">
-              <label htmlFor="password" className="control-label">Password</label>
-              
-            </div>
-            <input id="password" type="password" className="form-control" name="password" tabIndex="2" required ref={(input)=>this.getPassword = input}/>
-            <div className="invalid-feedback">
-              please fill in your password
-            </div>
-          </div>
-
-          
-
-          <div className="form-group">
-            <button type="submit" className="btn btn-primary btn-lg btn-block" tabIndex="4">
-              Submit
-            </button>
-          </div>
-        </form>
         </div>
-            
-          </div>
-        </div>
-      </div>
      
    
         )

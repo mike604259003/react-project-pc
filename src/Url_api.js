@@ -16,6 +16,7 @@ const api = (props) => {
        case 'getCheckOrder' : return path+"order/getCheckOrder";
        case 'openbill' : return path+"bill/openbill";
        case 'getAllTable' : return path+"table/getAllTable";
+       case 'getTable' : return path+"table/getTable";
        case 'getBillStatusMakepayment' : return path+"bill/getBillStatusMakepayment";
        case 'getOrderByID' : return path+"order/getOrderByID";
        case 'getRowcategory' : return path+"food/getRowcategory";
@@ -41,6 +42,7 @@ const api = (props) => {
        case 'changeStatusOrderDetail' : return path+"order/changeStatusOrderDetail";
        case 'getDateOrder' : return path+"order/getDateOrder";
        case 'getBillStatusMakepaymentDate' : return path+"bill/getBillStatusMakepaymentDate";
+       case 'register' : return path+"login/register";
         default : return "";
     }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Url_api from '../Url_api';
+import { Link } from "react-router-dom";
 
 class Signin extends React.Component{
 
@@ -120,10 +121,10 @@ OnSubmitLogin = (e)=>{
             </div>
   
             <div className="text-center p-t-136">
-              <a className="txt2" href="#">
+              <Link className="txt2" to="/register">
                 Create your Account
                 <i className="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-              </a>
+              </Link>
             </div>
           </form>
         </div>
