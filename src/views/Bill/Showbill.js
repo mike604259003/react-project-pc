@@ -60,12 +60,13 @@ class Showbill extends React.Component{
       })
     }
 
-    payment(bill_id){
-      console.log("bill "+bill_id);
+    payment(bill_id,table){
+     // console.log("bill "+table);
       
     axios.post(api('changeStatusBill2'), 
     JSON.stringify({
-      'bill_id':bill_id
+      'bill_id':bill_id,
+      'table_id':table
     }))
     }
 
@@ -111,7 +112,7 @@ class Showbill extends React.Component{
                     trigger={() =>  <button type="button" class="btn btn-warning"><i className="fas fa-print"/></button>}
                     content={() => this.componentRef}
                     />
-                    <button onClick={this.payment.bind("data", bill.b_id)} type="button" class="btn btn-success"><i class="fas fa-check"></i></button>
+                    <button onClick={this.payment.bind("data", bill.b_id , bill.b_table)} type="button" class="btn btn-success"><i class="fas fa-check"></i></button>
                     <div style={{ display: 'none' }}>
                      <Detail bill={bill.b_id} ref={el => (this.componentRef = el)}/>
                      </div>

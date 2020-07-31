@@ -30,7 +30,7 @@ const api = (props) => {
 
        case 'getBillByID' : return path+"bill/getBillByID";
        case 'changeStatusBill2' : return path+"bill/changeStatusBill2";
-
+       case 'changeStatusBill1' : return path+"bill/changeStatusBill1";
        case 'updateorder' : return path+"order/Incrementorder";
        case 'clear' : return path+"order/clear";
        case 'deletemenu' : return path+"order/deletemenu";
@@ -43,6 +43,12 @@ const api = (props) => {
        case 'getDateOrder' : return path+"order/getDateOrder";
        case 'getBillStatusMakepaymentDate' : return path+"bill/getBillStatusMakepaymentDate";
        case 'register' : return path+"login/register";
+       case 'confirmorderall' : return path+"order/confirmorderall";
+       case 'getBillIDLast' : return path+"bill/getBillIDLast";
+       case 'checkOrderBeforeCheckBill' : return path+"order/checkOrderBeforeCheckBill";
+       case 'getDataChartOrder' : return path+"order/getDataChartOrder";
+       case 'getBillDayChart' : return path+"bill/getBillDayChart";
+
         default : return "";
     }
 }

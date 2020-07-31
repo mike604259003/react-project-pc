@@ -42,6 +42,14 @@ class ShowDetail extends React.Component{
     },1000)
     
   }
+  Comfirmorderall = () => {
+    const order_id = this.props.order_id;
+    axios.post(api('confirmorderall'), 
+    JSON.stringify({
+      'order_id':order_id
+    }))
+    
+  }
 
   onConfirmClick = () => {
     const order = this.state.detail[0].od_id;
@@ -96,9 +104,9 @@ class ShowDetail extends React.Component{
                       <td>{detail.od_amount}</td>
                       <td>
                       { detail.od_status != 'กำลังเตรียม' ? 
-                                <button class="btn btn-info" disabled><i className="fas fa-check"/></button>
+                                <button class="btn btn-success" ><i className="ni ni-check-bold"/></button>
                                 :
-                                <button class="btn btn-info" onClick={this.choosefood.bind("Undata", detail.od_f_id)}><i className="fas fa-check"/></button>
+                                <button class="btn btn-danger" onClick={this.choosefood.bind("Undata", detail.od_f_id)}><i className="ni ni-fat-remove"/></button>
                                 }
                       </td>
                     </tr>
@@ -110,11 +118,14 @@ class ShowDetail extends React.Component{
                 <button className="btn btn-default" onClick={this.props.backToOrder}>ย้อนกลับ</button>
                 {
                   this.state.all != this.state.have ?
-                  <button className="btn btn-success" onClick={this.onConfirmClick} disabled>ยืนยัน</button>
-                  :<button className="btn btn-primary" onClick={this.onConfirmClick}>ยืนยัน</button>
+                  <button className="btn btn-primary" >ยืนยัน</button>
+                  :<button className="btn btn-success" onClick={this.onConfirmClick}>ยืนยัน</button>
                 }
-                
-
+                 {
+                  this.state.all != this.state.have ?
+                  <button className="btn btn-primary" onClick={this.Comfirmorderall}>ยืนยันทั้งหมด</button>
+                  :<button className="btn btn-success" >ยืนยันทั้งหมด</button>
+                 }
                 </div>
                 </center>
               </Card>

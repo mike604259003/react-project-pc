@@ -12,18 +12,27 @@ import {
     Table,
     Container,
     Row,
-    Col
+    Col, 
+    TabContent,
+    TabPane,
+    FormGroup,
+    InputGroupAddon,
+    InputGroupText,
+    InputGroup
   } from "reactstrap";
 import axios from 'axios'; 
 import api from '../../Url_api';
-  
+import classnames from "classnames"; 
   
 import Header from "../../components/Headers/Header";
 import ShowDetail from './ShowDetail';
 import StatusMenulist3 from './StatusMenulist3';
-import DatePicker from "react-datepicker";
+import ReactDatetime from "react-datetime";
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend
+} from 'recharts';
 
-import "react-datepicker/dist/react-datepicker.css";
+
 import {  format } from 'date-fns'
 class Order extends React.Component{
 
@@ -33,7 +42,9 @@ class Order extends React.Component{
             data : [],
             order_detail : null,
             startDate: new Date(),
-            detail:[]
+            detail:[],
+            tabs: 1,
+            data_chart:[]
         
         }
 
@@ -43,8 +54,15 @@ class Order extends React.Component{
       
     }
 
+    toggleNavs = (e, state, index) => {
+      e.preventDefault();
+      this.setState({
+        [state]: index
+      });
+    };
+
     componentDidMount(){  
-      setInterval( () => {
+    
       const date = format(new Date(this.state.startDate), 'yyyy-MM-dd')
       
       
@@ -56,8 +74,17 @@ class Order extends React.Component{
           const detail = res.data; 
           this.setState({ detail });
         })
+
+        axios.post(api('getDataChartOrder'), 
+        JSON.stringify({
+          'date':date
+        }))
+        .then(res => {
+          const data_chart = res.data; 
+          this.setState({ data_chart });
+        })
     
-    },1000)
+  
     }
 
     selectOrder(o_id){
@@ -94,14 +121,38 @@ class Order extends React.Component{
       this.setState({
         startDate: date
       });
+
+      const date1 = format(new Date(date), 'yyyy-MM-dd')
+      
+      
+      axios.post(api('getDateOrder'), 
+      JSON.stringify({
+        'date':date1
+      }))
+      .then(res => {
+        if(res.data[0] != undefined){
+        const detail = res.data; 
+        this.setState({ detail });
+        axios.post(api('getDataChartOrder'), 
+        JSON.stringify({
+          'date':date1
+        }))
+        .then(result => {
+          const data_chart = result.data; 
+          this.setState({ data_chart });
+        })
+
+        }else{
+          this.setState({detail:[]})
+        }
+      })
+
+     
+  
     };
 
     render(){
-      const ExampleCustomInput = ({ value, onClick }) => (
-        <button className="btn btn-primary" onClick={onClick} style={{marginRight:"150px"}}>
-          {value}
-        </button>
-      );
+     
         return(
             <> 
              <Header />
@@ -111,19 +162,103 @@ class Order extends React.Component{
         <Row className="mt-5">
             <Col className="mb-5 mb-xl-0" xl="12">
               <Card className="shadow">
+           
+       
                 <CardHeader className="border-0">
                   <Row className="align-items-center">
                     <div className="col">
                       <h3 className="mb-0">ประวัติออเดอร์ทั้งหมด</h3>
                     </div>
-                    <DatePicker
-                      selected={this.state.startDate}
-                      onChange={this.handleChange}
-                      customInput={<ExampleCustomInput />}
-                    />
+                    <div className="nav-wrapper">
+          <Nav
+            style={{marginRight:"100px"}}
+            id="tabs-icons-text"
+            pills
+            role="tablist"
+          >
+            
+            <NavItem>
+              <NavLink
+                aria-selected={this.state.tabs === 1}
+                className={classnames("mb-sm-3 mb-md-0", {
+                  active: this.state.tabs === 1
+                })}
+                onClick={e => this.toggleNavs(e, "tabs", 1)}
+                href="#pablo"
+                role="tab"
+              >
+                <i className="ni ni-calendar-grid-58 mr-2" />
+                วัน
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                aria-selected={this.state.tabs === 2}
+                className={classnames("mb-sm-3 mb-md-0", {
+                  active: this.state.tabs === 2
+                })}
+                onClick={e => this.toggleNavs(e, "tabs", 2)}
+                href="#pablo"
+                role="tab"
+              >
+                <i className="ni ni-calendar-grid-58 mr-2" />
+                เดือน
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                aria-selected={this.state.tabs === 3}
+                className={classnames("mb-sm-3 mb-md-0", {
+                  active: this.state.tabs === 3
+                })}
+                onClick={e => this.toggleNavs(e, "tabs", 3)}
+                href="#pablo"
+                role="tab"
+              >
+                <i className="ni ni-calendar-grid-58 mr-2" />
+                ปี
+              </NavLink>
+            </NavItem>
+          </Nav>
+        </div>
                   </Row>
                 </CardHeader>
+                <Card className="shadow">
+          <CardBody>
+            <TabContent activeTab={"tabs" + this.state.tabs}>
+              <TabPane tabId="tabs1">
+                <FormGroup>
+                  <InputGroup className="input-group-alternative">
+                    <InputGroupAddon>
+                      <InputGroupText>
+                        <i className="ni ni-calendar-grid-58" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <ReactDatetime
+                      defaultValue={this.state.startDate}
+                      inputProps={{
+                        placeholder: "Date Picker Here"
+                      }}
+                      timeFormat={false}
+                      dateFormat="DD/MM/YYYY"
+                      onChange={this.handleChange}
+                    />
+                  </InputGroup>
+                </FormGroup>
+              </TabPane>
+              <TabPane tabId="tabs2">
+               
+              </TabPane>
+              <TabPane tabId="tabs3">
                 
+              </TabPane>
+            </TabContent>
+          </CardBody>
+        </Card>
+
+        
+        
+                { this.state.detail[0] != undefined ? 
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                     <tr>
@@ -139,7 +274,7 @@ class Order extends React.Component{
                       <td>{data.o_time}</td>
                       <td>
                       <div className="col">
-                        <button type="button" class="btn btn-info" onClick={this.selectOrder.bind("Undata", data.o_id)}><i className="fas fa-eye"/></button>
+                        <button type="button" className="btn btn-info" onClick={this.selectOrder.bind("Undata", data.o_id)}><i className="fas fa-eye"/></button>
                         <StatusMenulist3 order={data.o_id}/>
                     </div>
                       </td>
@@ -147,7 +282,7 @@ class Order extends React.Component{
                   )}
                   </tbody>
                 </Table>
-              
+             :<center><h1 style={{marginTop:"80px",marginBottom:"80px"}}>ไม่พบข้อมูล !</h1></center>}
               </Card>
             </Col>
            
@@ -157,6 +292,23 @@ class Order extends React.Component{
         </Container>  
         :<ShowDetail confirmorder={this.confirmorder} backToOrder={this.backToOrder} order_id={this.state.order_detail}/>
         }
+        { this.state.detail[0] != undefined ?
+        <LineChart
+        width={600}
+        height={300}
+        data={this.state.data_chart}
+        margin={{
+          top: 50, right: 100, left: 100, bottom: 50,
+        }}
+      >
+        <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
+        <XAxis dataKey="f_name" padding={{ left: 30, right: 30 }}/>
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="total" stroke="#82ca9d" fill="#82ca9d"/>
+      </LineChart>
+      : ""}
       </>
            
         )
