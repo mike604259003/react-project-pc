@@ -28,9 +28,7 @@ import Header from "../../components/Headers/Header";
 import ShowDetail from './ShowDetail';
 import StatusMenulist3 from './StatusMenulist3';
 import ReactDatetime from "react-datetime";
-import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend
-} from 'recharts';
+
 
 
 import {  format } from 'date-fns'
@@ -292,23 +290,7 @@ class Order extends React.Component{
         </Container>  
         :<ShowDetail confirmorder={this.confirmorder} backToOrder={this.backToOrder} order_id={this.state.order_detail}/>
         }
-        { this.state.detail[0] != undefined ?
-        <LineChart
-        width={600}
-        height={300}
-        data={this.state.data_chart}
-        margin={{
-          top: 50, right: 100, left: 100, bottom: 50,
-        }}
-      >
-        <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-        <XAxis dataKey="f_name" padding={{ left: 30, right: 30 }}/>
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="total" stroke="#82ca9d" fill="#82ca9d"/>
-      </LineChart>
-      : ""}
+      
       </>
            
         )

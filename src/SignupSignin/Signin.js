@@ -111,15 +111,7 @@ OnSubmitLogin = (e)=>{
   <p className="txt3"> Username and Password incorrect!!</p>
  </div>
   }
-            <div className="text-center p-t-12">
-              <span className="txt1">
-                Forgot
-              </span>
-              <a className="txt2" href="#">
-                Username / Password?
-              </a>
-            </div>
-  
+          
             <div className="text-center p-t-136">
               <Link className="txt2" to="/register">
                 Create your Account

@@ -17,12 +17,12 @@ import {
 } from "reactstrap";
 import api from '../../Url_api';
 import axios from 'axios';
-import Addcategory from './Addcategory';
-
+import Addfood from './Addfood';
 import Header from "../../components/Headers/Header";
-import Editcategory from "./Editcategory";
+import Editfood from "../Food/Editfood";
 
-class Category extends React.Component {
+
+class Food extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,10 +31,10 @@ class Category extends React.Component {
       category: [],
       status: '',
       data: [],
-      c_id: '',
+      f_id: '',
       defaultModal: false
     };
-    this.backToCate = this.backToCate.bind(this);
+    this.backTofood = this.backTofood.bind(this);
     this.edit = this.edit.bind(this);
     this.delete = this.delete.bind(this);
   }
@@ -52,9 +52,8 @@ class Category extends React.Component {
       [state]: !this.state[state]
     });
   };
-
   componentDidMount() {
-    axios.get(api('getAllCategory'))
+    axios.get(api('searchAllMenu'))
       .then(res => {
         const data = res.data.data;
         this.setState({ data });
@@ -66,9 +65,9 @@ class Category extends React.Component {
 
   delete(id) {
 
-    axios.post(api('deletecategory'),
+    axios.post(api('deletefood'),
       JSON.stringify({
-        'c_id': id,
+        'f_id': id,
 
       }))
     this.setState({
@@ -79,7 +78,7 @@ class Category extends React.Component {
 
   edit(id) {
     this.setState({
-      c_id: id,
+      f_id: id,
       status: 'edit'
     })
 
@@ -89,7 +88,7 @@ class Category extends React.Component {
     this.setState({ status: 'add' })
   }
 
-  backToCate() {
+  backTofood() {
     this.setState({
       status: ''
     })
@@ -110,7 +109,7 @@ class Category extends React.Component {
                 <CardHeader className="border-0">
                   <Row className="align-items-center">
                     <div className="col">
-                      <h3 className="mb-0">จัดการประเภทอาหาร</h3>
+                      <h3 className="mb-0">จัดการเมนูอาหาร</h3>
                     </div>
                     <div className="nav-wrapper">
                       {this.state.status == '' ? <Button className="btn-icon btn-3" color="secondary" type="button" style={{ marginRight: "100px" }} onClick={this.ChangeAdd}>
@@ -128,16 +127,17 @@ class Category extends React.Component {
 
 
                 {this.state.status == 'add' ?
-                  <Addcategory backToCate={this.backToCate} />
+                  <Addfood backTofood={this.backTofood} />
                   : ""
                 }
-
                 {
                   this.state.status == '' ?
                     <Table className="align-items-center table-flush" responsive>
                       <thead className="thead-light">
                         <tr>
+
                           <th scope="col">ประเภทอาหาร</th>
+                          <th scope="col">ชื่ออาหาร</th>
                           <th scope="col">รูปภาพ</th>
                           <th scope="col">แก้ไข / ลบ</th>
                         </tr>
@@ -146,9 +146,11 @@ class Category extends React.Component {
 
                         {this.state.data.map(data =>
                           <tr>
+
                             <th scope="row">{data.c_name}</th>
-                            <td><img src={data.c_icons} alt={data.c_icons} width={150} height={150}/></td>
-                            <td><button onClick={this.edit.bind("Undata", data.c_id)} type="button" class="btn btn-warning"><i class="far fa-edit"></i></button><button onClick={() => this.toggleModal("defaultModal")} type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button></td>
+                            <td>{data.f_name}</td>
+                            <td><img src={data.f_img} alt={data.f_img} width={150} height={150}/></td>
+                            <td><button onClick={this.edit.bind("Undata", data.f_id)} type="button" class="btn btn-warning"><i class="far fa-edit"></i></button><button onClick={() => this.toggleModal("defaultModal")} type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button></td>
                             <Modal
                               className="modal-dialog-centered"
                               isOpen={this.state.defaultModal}
@@ -174,7 +176,7 @@ class Category extends React.Component {
                                 </center>
                               </div>
                               <div className="modal-footer">
-                                <Button color="danger" onClick={this.delete.bind("Undata", data.c_id)} type="button" style={{ marginLeft: '300px' }} >
+                                <Button color="danger" onClick={this.delete.bind("Undata", data.f_id)} type="button" style={{ marginLeft: '300px' }} >
                                   ลบ
                 </Button>
                                 <Button
@@ -190,15 +192,16 @@ class Category extends React.Component {
                             </Modal>
 
                           </tr>
+
                         )}
 
                       </tbody>
-                    </Table> : ""
+                    </Table>
+                    : ""
                 }
-
                 {
                   this.state.status == 'edit' ?
-                    <Editcategory backToCate={this.backToCate} id={this.state.c_id} />
+                    <Editfood backTofood={this.backTofood} id={this.state.f_id}/>
                     : ""
                 }
               </Card>
@@ -213,4 +216,4 @@ class Category extends React.Component {
   }
 }
 
-export default Category;
+export default Food;

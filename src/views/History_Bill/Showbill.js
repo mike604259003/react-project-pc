@@ -26,9 +26,6 @@ import axios from 'axios';
 import api from '../../Url_api';
 import DatePicker from "react-datepicker";
 import {  format } from 'date-fns'
-import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-} from 'recharts';
 
   
   
@@ -294,23 +291,7 @@ class Showbill extends React.Component{
         
           
         </Container>
-        {this.state.bill[0] != undefined ?
-        <LineChart
-        width={900}
-        height="auto"
-        data={this.state.bill_chart}
-        margin={{
-          top: 50, right: 100, left: 100, bottom: 50,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="time" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="price" stroke="#82ca9d" strokeDasharray="3 4 5 2" />
-      </LineChart>
-      : ""}
+       
       </>
            
         )

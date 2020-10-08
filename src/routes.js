@@ -5,6 +5,7 @@ import Order from './views/Order/Order';
 import Logout from './SignupSignin/Logout';
 import history_order from './views/History_Order/Order';
 import history_bill from './views/History_Bill/Showbill';
+import Addfood from './views/Food/Food';
 
 var routes = [
  
@@ -40,7 +41,7 @@ var routes = [
     path: "/food",
     name: "จัดการเมนูอาหาร",
     icon: "fas fa-utensils text-red",
-    component: Index,
+    component: Addfood,
     layout: "/admin"
   },
   {
