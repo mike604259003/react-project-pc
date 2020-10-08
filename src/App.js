@@ -15,7 +15,7 @@ class App extends Component{
         <Route path="/react-project-pc/login" component={Login} />
         <Route path="/react-project-pc/logout" component={Logout} />
         <Route path="/react-project-pc/register" component={Register} />
-        <Redirect from="/react-project-pc/" to="/login" />
+        <Redirect from="/react-project-pc/" to="/react-project-pc/login" />
       </Switch>
     </BrowserRouter>
     )
