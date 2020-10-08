@@ -11,11 +11,11 @@ class App extends Component{
     return(
       <BrowserRouter>
       <Switch>
-        <PrivateRoute path="/admin" component={AdminLayout} />
-        <Route path="/login" component={Login} />
-        <Route path="/logout" component={Logout} />
-        <Route path="/register" component={Register} />
-        <Redirect from="/" to="/login" />
+        <PrivateRoute path="/react-project-pc/admin" component={AdminLayout} />
+        <Route path="/react-project-pc/login" component={Login} />
+        <Route path="/react-project-pc/logout" component={Logout} />
+        <Route path="/react-project-pc/register" component={Register} />
+        <Redirect from="/react-project-pc/" to="/login" />
       </Switch>
     </BrowserRouter>
     )
