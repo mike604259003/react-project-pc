@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/react-project-pc/static/css/main.d8c1e859.chunk.css",
+    "main.js": "/react-project-pc/static/js/main.a61230df.chunk.js",
+    "main.js.map": "/react-project-pc/static/js/main.a61230df.chunk.js.map",
+    "runtime-main.js": "/react-project-pc/static/js/runtime-main.541645d9.js",
+    "runtime-main.js.map": "/react-project-pc/static/js/runtime-main.541645d9.js.map",
+    "static/css/2.4c90ec17.chunk.css": "/react-project-pc/static/css/2.4c90ec17.chunk.css",
+    "static/js/2.3f95522d.chunk.js": "/react-project-pc/static/js/2.3f95522d.chunk.js",
+    "static/js/2.3f95522d.chunk.js.map": "/react-project-pc/static/js/2.3f95522d.chunk.js.map",
+    "index.html": "/react-project-pc/index.html",
+    "precache-manifest.3a7b89e7ea8c1dc600ffb11ee66e5dcc.js": "/react-project-pc/precache-manifest.3a7b89e7ea8c1dc600ffb11ee66e5dcc.js",
+    "service-worker.js": "/react-project-pc/service-worker.js",
+    "static/css/2.4c90ec17.chunk.css.map": "/react-project-pc/static/css/2.4c90ec17.chunk.css.map",
+    "static/css/main.d8c1e859.chunk.css.map": "/react-project-pc/static/css/main.d8c1e859.chunk.css.map",
+    "static/js/2.3f95522d.chunk.js.LICENSE.txt": "/react-project-pc/static/js/2.3f95522d.chunk.js.LICENSE.txt",
+    "static/media/argon-react.png": "/react-project-pc/static/media/argon-react.f38ddea9.png",
+    "static/media/all.min.css": "/react-project-pc/static/media/fa-solid-900.cdfec5cf.woff",
+    "static/media/nucleo.css": "/react-project-pc/static/media/nucleo-icons.f82ec6ba.ttf",
+    "static/media/team-1-800x800.jpg": "/react-project-pc/static/media/team-1-800x800.53033970.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.541645d9.js",
+    "static/css/2.4c90ec17.chunk.css",
+    "static/js/2.3f95522d.chunk.js",
+    "static/css/main.d8c1e859.chunk.css",
+    "static/js/main.a61230df.chunk.js"
+  ]
+}
